@@ -8,15 +8,17 @@ import { useRef } from "react";
 
 interface Props {
   id: string;
+  submitCallback?: () => void;
 }
 
-export function ChatInput({ id }: Props) {
+export function ChatInput({ id, submitCallback }: Props) {
   const { input, handleInputChange, handleSubmit, isLoading } = useChat({
     id,
   });
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     handleSubmit(e);
+    if (submitCallback) submitCallback();
   };
 
   const form = useRef<HTMLFormElement | null>(null);

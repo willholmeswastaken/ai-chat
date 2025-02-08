@@ -1,17 +1,10 @@
 "use client";
 
 import { ChatInput } from "@/components/chat-input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useChat } from "ai/react";
-import {
-  Pencil,
-  Copy,
-  Share2,
-  RefreshCw,
-  ThumbsUp,
-  ThumbsDown,
-} from "lucide-react";
+import { Copy, Share2, ThumbsUp, ThumbsDown, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useRef, useEffect } from "react";
 
@@ -35,11 +28,14 @@ export default function ChatPage() {
       {/* Header */}
       <div className="border-b border-gray-800 p-4">
         <div className="flex items-center gap-3 max-w-3xl mx-auto">
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>WAI</AvatarFallback>
-          </Avatar>
-          <h1 className="text-xl font-semibold">Hello world</h1>
+          <Link href="/">
+            <ArrowLeft className="justify-self-start" />
+          </Link>
+          <div className="flex-1 flex items-center justify-center overflow-hidden">
+            <h1 className="text-xl font-semibold truncate w-full max-w-full">
+              {messages[0]?.content}
+            </h1>
+          </div>
         </div>
       </div>
 
@@ -50,10 +46,10 @@ export default function ChatPage() {
             <div key={message.id} className="space-y-2">
               <div className="flex flex-col">
                 <div
-                  className={`inline-block max-w-[85%] px-4 py-2 rounded-lg ${
+                  className={`inline-block max-w-[85%] py-2 rounded-lg ${
                     message.role === "assistant"
                       ? "px-1"
-                      : "bg-[#2A2A2A] text-white ml-auto"
+                      : "bg-[#2A2A2A] text-white ml-auto px-4"
                   }`}
                 >
                   {message.content}
