@@ -8,6 +8,7 @@ import { Copy, Share2, ThumbsUp, ThumbsDown, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useRef, useEffect } from "react";
+import { UserButton } from "@clerk/nextjs";
 
 export default function ChatPage() {
   const params = useParams();
@@ -22,8 +23,6 @@ export default function ChatPage() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-  console.log(messages);
   return (
     <div className="flex flex-col min-h-screen bg-black text-white">
       {/* Header */}
@@ -37,6 +36,14 @@ export default function ChatPage() {
               {messages[0]?.content}
             </h1>
           </div>
+          <UserButton
+            afterSignOutUrl="/"
+            appearance={{
+              elements: {
+                userButtonAvatarBox: "w-8 h-8",
+              },
+            }}
+          />
         </div>
       </div>
 

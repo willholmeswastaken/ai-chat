@@ -45,7 +45,7 @@ export default function ChatInterface() {
           </Card>
           <Card className="bg-[#1A1A1A] text-white border-0 p-4 hover:bg-[#2A2A2A] transition-colors cursor-pointer">
             <Activity className="h-6 w-6 mb-2" />
-            <div className="font-medium">Analyze doctor's note</div>
+            <div className="font-medium">Analyze doctor&apos;s note</div>
           </Card>
         </div>
       </div>
