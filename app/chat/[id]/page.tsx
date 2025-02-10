@@ -7,14 +7,12 @@ import { useChat } from "ai/react";
 import { Copy, Share2, ThumbsUp, ThumbsDown, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useRef, useEffect, useMemo } from "react";
+import { useRef, useEffect } from "react";
 import { UserButton } from "@clerk/nextjs";
-import { useChatMessages } from "@/hooks/use-chats";
 
 export default function ChatPage() {
   const params = useParams();
   const chatId = params.id as string;
-  const { data: dbMessages } = useChatMessages(chatId);
   const { messages } = useChat({
     id: chatId,
     experimental_throttle: 50,
@@ -25,13 +23,6 @@ export default function ChatPage() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-  // Merge messages
-  const allMessages = useMemo(() => {
-    return [...(dbMessages || []), ...messages];
-  }, [dbMessages, messages]);
-
-  console.log(allMessages);
   return (
     <div className="flex flex-col min-h-screen bg-black text-white">
       {/* Header */}
@@ -42,7 +33,7 @@ export default function ChatPage() {
           </Link>
           <div className="flex-1 flex items-center justify-center overflow-hidden">
             <h1 className="text-xl font-semibold truncate w-full max-w-full">
-              {allMessages[0]?.content}
+              {messages[0]?.content}
             </h1>
           </div>
           <UserButton
@@ -59,8 +50,8 @@ export default function ChatPage() {
       {/* Messages */}
       <div className="flex-1 overflow-auto p-4">
         <div className="max-w-3xl mx-auto space-y-6">
-          {allMessages.length > 0 ? (
-            allMessages.map((message) => (
+          {messages.length > 0 ? (
+            messages.map((message) => (
               <div key={message.id} className="space-y-2">
                 <div className="flex flex-col">
                   <div
